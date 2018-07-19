@@ -32,7 +32,8 @@ marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_fo
     } else {
       data = data.frame(x = as.numeric(data[,deparse(substitute(x))]), 
                         y = as.numeric(data[,deparse(substitute(y))]),
-                        group = as.factor(data[,deparse(substitute(group))]))
+                        group = as.factor(data[,deparse(substitute(group))]),
+                        gradient = as.string(data[,deparse(substitute(gradient))]))
     }
     if(sum(!complete.cases(data)) > 0){
       warning(sprintf("Removed %i rows with missing data", sum(!complete.cases(data))))
@@ -92,7 +93,7 @@ marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_fo
     } else if(!missing(group) & missing(gradient)){
       do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(scales::alpha(group_colors[data$group], alpha))), moreargs))
     } else if(missing(group) & !missing(gradient)){
-      do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = data$gradient), moreargs))
+      do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(data$gradient)), moreargs))
     }
     axis(3, labels = F, tck = 0.01)
     axis(4, labels = F, tck = 0.01)
