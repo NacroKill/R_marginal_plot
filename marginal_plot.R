@@ -18,7 +18,8 @@ marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_fo
       data = data.frame(x = as.numeric(x), y = as.numeric(y))
     } else {
       data = data.frame(x = as.numeric(data[,deparse(substitute(x))]), 
-                        y = as.numeric(data[,deparse(substitute(y))]))
+                        y = as.numeric(data[,deparse(substitute(y))]),
+                        gradient = as.string(data[,deparse(substitute(gradient))])))
     }
     if(sum(!complete.cases(data)) > 0){
       warning(sprintf("Removed %i rows with missing data", sum(!complete.cases(data))))
