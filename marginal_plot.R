@@ -92,7 +92,7 @@ marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_fo
     } else if(!missing(group) & missing(gradient)){
       do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(scales::alpha(group_colors[data$group], alpha))), moreargs))
     } else if(missing(group) & !missing(gradient)){
-      do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(data$gradient)), moreargs))
+      do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = data$gradient), moreargs))
     }
     axis(3, labels = F, tck = 0.01)
     axis(4, labels = F, tck = 0.01)
