@@ -1,4 +1,4 @@
-marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_formula = y ~ x, bw = "nrd0", adjust = 1, alpha = 1, plot_legend = T, ...){
+marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_formula = y ~ x, bw = "nrd0", adjust = 1, alpha = 1, plot_legend = T, gradient = NULL, ...){
   require(scales)
   ###############
   # Plots a scatterplot with marginal probability density functions for x and y. 
@@ -87,10 +87,12 @@ marginal_plot = function(x, y, group = NULL, data = NULL, lm_show = FALSE, lm_fo
     
     # main plot
     par(mar = c(4,5,0,0))
-    if(missing(group)){
+    if(missing(group) & missing(gradient)){
       do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(scales::alpha("black", alpha))), moreargs))
-    } else {
+    } else if(!missing(group) & missing(gradient)){
       do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(scales::alpha(group_colors[data$group], alpha))), moreargs))
+    } else if(missing(group) & !missing(gradient)){
+      do.call(plot, c(list(x = quote(data$x), y = quote(data$y), col = quote(scales::alpha(data$gradient, alpha))), moreargs))
     }
     axis(3, labels = F, tck = 0.01)
     axis(4, labels = F, tck = 0.01)
